@@ -1,0 +1,36 @@
+<mat-toolbar [class.mat-elevation-z8]="true" color="accent">
+    <button [class.mat-elevation-z8]="true" (click)="navigate('1D')"
+        style="background: white;color: black;">1D</button>&nbsp;
+    <button [class.mat-elevation-z8]="true" (click)="navigate('7D')"
+        style="background: white;color: black;">7D</button>&nbsp;
+    <button [class.mat-elevation-z8]="true" (click)="navigate('1M')"
+        style="background: white;color: black;">1M</button>&nbsp;
+    <button [class.mat-elevation-z8]="true" (click)="navigate('3M')"
+        style="background: white;color: black;">3M</button>&nbsp;
+    <button [class.mat-elevation-z8]="true" (click)="navigate('1Y')"
+        style="background: white;color: black;">1Y</button>&nbsp;
+    <button [class.mat-elevation-z8]="true" (click)="navigate('YTD')"
+        style="background: white;color: black;">YTD</button>&nbsp;
+    <button [class.mat-elevation-z8]="true" (click)="navigate('ALL')"
+        style="background: white;color: black;">ALL</button>
+    <span class="example-spacer"></span>
+    <button [class.mat-elevation-z8]="true" [routerLink]="['/home']" [queryParams]="{scrollId:scrollId}"
+        style="float: right; background:white">&#10006;</button>
+</mat-toolbar>
+
+
+
+<div [class.mat-elevation-z8]="true" style="width:100%">
+    <apx-chart [xaxis]="xaxis" [yaxis]="yaxis" [series]=" series0" [chart]="chart0" [title]="{text:''}"
+        [colors]="['goldenrod']" [stroke]="{width:2}" [tooltip]="tooltip" [noData]="{
+            text: 'Loading'}">
+    </apx-chart>
+</div>
+<!--
+<div>{{tooltipPrice}}
+    {{tooltipDate}}
+    {{tooltip24HVolume}}
+    {{tooltipMarketCap}}
+    {{tooltipCirculatingSuppy}}
+</div>
+-->

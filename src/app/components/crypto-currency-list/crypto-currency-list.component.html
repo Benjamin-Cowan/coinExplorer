@@ -1,0 +1,81 @@
+<mat-toolbar color="accent" [class.mat-elevation-z8]="true">
+    <button mat-raised-button [class.mat-elevation-z8]="true" style="border-radius: 0px;background:goldenrod">
+        <i class="fa  fa-solid fa-database"></i><i class="fas fa-solid fa-coin"></i> Coin Explorer
+    </button>
+
+
+    <input [(ngModel)]="currencyListFilter" [placeholder]="'search'" [class.mat-elevation-z8]="true"
+        style="width: calc(100% - 131.06px);">
+</mat-toolbar>
+<table [class.mat-elevation-z8]="true">
+    <thead>
+        <th id="headerId1-1">Id</th>
+        <th id="headerId2-2">Name</th>
+        <th id="headerId3-3">Price</th>
+        <th id="headerId4-4">24H %</th>
+        <th id="headerId5-5">7D %</th>
+        <th id="headerId6-6">Market Cap</th>
+        <th id="headerId7-7">Volume(24H)</th>
+        <th id="headerId8-8">Circulating Supply</th>
+    </thead>
+</table>
+<cdk-virtual-scroll-viewport #viewPort itemSize="50" (scrolledIndexChange)="onViewPortScroll($event)"
+    [class.mat-elevation-z8]="true" style="width: calc(100vw); height: calc(100vh - 173.97px)">
+    <table [class.mat-elevation-z8]="true">
+        <tbody>
+            <tr *cdkVirtualFor="let list of cryptoCurrencyList|currencyListPipe:currencyListFilter"
+                class="animate__animated animate__bounceInRight" (click)="null" [routerLink]="['/graph']"
+                [queryParams]="{id:list['id'],range:'1D',scrollId:scrollId}">
+                <td id="headerId1"> {{list['id']}}</td>
+                <td id="headerId2">
+                    <img [src]="'https://s2.coinmarketcap.com/static/img/coins/64x64/'+ list['id']+'.png'" alt=""
+                        style="height: 25px">
+                    {{list['name']}}
+                    {{list['symbol']}}
+                </td>
+                <td id="headerId3">
+                    ${{list['quotes'][2]['price'].toLocaleString() }}
+                </td>
+                <td id="headerId4" [ngStyle]="{'color':list['quotes'][2]['percentChange24h'] > 0 ? 'green' : 'red' }">
+                    {{list['quotes'][2]['percentChange24h'].toLocaleString()}}%</td>
+                <td id="headerId5" [ngStyle]="{'color':list['quotes'][2]['percentChange7d'] > 0 ? 'green' : 'red' }">
+                    {{list['quotes'][2]['percentChange7d'].toLocaleString()}}%
+                </td>
+                <td id="headerId6">${{list['quotes'][2]['marketCap'].toLocaleString()}}</td>
+                <td id="headerId7">${{list['quotes'][2]['volume24h'].toLocaleString()}}</td>
+                <td id="headerId8"> {{list['circulatingSupply'].toLocaleString()}}</td>
+            </tr>
+
+
+        </tbody>
+    </table>
+</cdk-virtual-scroll-viewport>
+
+
+
+<!--
+<ng-template #content let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title"></h4>
+        <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body">
+
+        <div id="chart0"></div>
+        <div id="chart1"></div>
+        <div id="chart2"></div>
+        <div id="chart3"></div>
+        <div id="chart4"></div>
+        <div id="chart5"></div>
+        <div id="chart6"></div>
+
+    </div>
+
+
+  <div class="modal-footer">
+        <button type="button" class="btn btn-light" (click)="modal.close('Close click')">Close</button>
+    </div>
+    
+
+</ng-template>
+-->
