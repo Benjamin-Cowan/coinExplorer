@@ -11,6 +11,7 @@ import {
   ApexStroke,
   ApexGrid
 } from "ng-apexcharts";
+import { AppService } from 'src/app/services/app.service';
 @Component({
   selector: 'app-graph',
   templateUrl: './graph.component.html',
@@ -25,7 +26,10 @@ export class GraphComponent implements OnInit {
   chartOptionsV: any;
   loading: boolean = true;
 
-  constructor(private route: ActivatedRoute, private router: Router, private httpService: HttpService) {
+  constructor(private route: ActivatedRoute, private router: Router, private httpService: HttpService, private appService: AppService) {
+    this.appService.selectedCoin$.subscribe((selectedCoin: any) => {
+      console.log(selectedCoin)
+    })
     this.route['data'].subscribe((response: any) => {
       this.graphData = this.convertEpochArray(Object.keys(response['graphResolverService']['data']['points']), response['graphResolverService']['data']['points']);
       this.updateGraph();

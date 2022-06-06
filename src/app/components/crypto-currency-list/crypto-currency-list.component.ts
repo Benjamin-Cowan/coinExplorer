@@ -4,6 +4,7 @@ import { HttpService } from 'src/app/services/http.service';
 import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
 import { CurrencyListPipe } from 'src/app/pipes/currency-list.pipe';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { AppService } from 'src/app/services/app.service';
 
 @Component({
   selector: 'app-crypto-currency-list',
@@ -19,7 +20,7 @@ export class CryptoCurrencyListComponent implements OnInit, AfterViewInit {
   selectedCurrency: any;
   scrollId = 0;
 
-  constructor(private httpService: HttpService, private route: ActivatedRoute, private modalService: NgbModal, private router: Router) {
+  constructor(private httpService: HttpService, private route: ActivatedRoute, private modalService: NgbModal, private router: Router, private appService: AppService) {
     this.route['queryParams'].subscribe(response => { this.scrollId = response['scrollId'] });
   }
 
@@ -68,17 +69,28 @@ export class CryptoCurrencyListComponent implements OnInit, AfterViewInit {
   }
 
   calculateHeaderWidth() {
-    for (var x = 0; x < 10; x++) {
-      if (document.getElementById(`headerId${x.toString()}`)) {
-        document.getElementById(`headerId${x.toString()}-${x.toString()}`)!['style']['width'] =
-          document.getElementById(`headerId${x.toString()}`)!['offsetWidth'].toString() + 'px';
+    setTimeout(() => {
+      for (var x = 0; x < 10; x++) {
+        if (document.getElementById(`headerId${x.toString()}`)) {
+          document.getElementById(`headerId${x.toString()}-${x.toString()}`)!['style']['width'] =
+            document.getElementById(`headerId${x.toString()}`)!['offsetWidth'].toString() + 'px';
+        }
       }
-    }
+    }, 0);
+
   }
   selectedIndexChange($event: any) {
     if ($event === 0) {
       setTimeout(() => { this.viewPort.scrollToIndex(this.scrollId, 'auto') }, 0);
     }
 
+  }
+
+  onkeyup() {
+    this.calculateHeaderWidth();
+  }
+
+  selectCoin(list: any) {
+    this.appService.updateSelectedCoin(list)
   }
 }

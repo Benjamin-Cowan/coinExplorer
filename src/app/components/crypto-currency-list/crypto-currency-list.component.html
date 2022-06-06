@@ -1,12 +1,17 @@
 <mat-toolbar color="accent" [class.mat-elevation-z8]="true">
-    <button mat-raised-button [class.mat-elevation-z8]="true" style="border-radius: 0px;background:goldenrod">
-        <i class="fa  fa-solid fa-database"></i><i class="fas fa-solid fa-coin"></i> Coin Explorer
-    </button>
+    <span class="example-spacer"></span>
+    <span [class.mat-elevation-z8]="true"
+        style=" padding:3px; font-size:30px; border: 1px solid slategray ;border-style:dashed;;box-shadow: 3px 3px 3px black;">
+        <i class="fa  fa-solid fa-database "></i> Coin Explorer
+    </span>
 
+    <span class="example-spacer"></span>
 
-    <input [(ngModel)]="currencyListFilter" [placeholder]="'search'" [class.mat-elevation-z8]="true"
-        style="width: calc(100% - 131.06px);">
 </mat-toolbar>
+
+
+
+
 <table [class.mat-elevation-z8]="true">
     <thead>
         <th id="headerId1-1">Id</th>
@@ -19,12 +24,14 @@
         <th id="headerId8-8">Circulating Supply</th>
     </thead>
 </table>
+<input [(ngModel)]="currencyListFilter" [placeholder]="'search'" (keyup)="onkeyup()" [class.mat-elevation-z8]="true"
+    style="height: 32px;border-radius: 10px;border: 1px solid slategray;width: 100%;">
 <cdk-virtual-scroll-viewport #viewPort itemSize="50" (scrolledIndexChange)="onViewPortScroll($event)"
     [class.mat-elevation-z8]="true" style="width: calc(100vw); height: calc(100vh - 173.97px)">
     <table [class.mat-elevation-z8]="true">
         <tbody>
             <tr *cdkVirtualFor="let list of cryptoCurrencyList|currencyListPipe:currencyListFilter"
-                class="animate__animated animate__bounceInRight" (click)="null" [routerLink]="['/graph']"
+                class="animate__animated animate__bounceInRight" (click)="selectCoin(list)" [routerLink]="['/graph']"
                 [queryParams]="{id:list['id'],range:'1D',scrollId:scrollId}">
                 <td id="headerId1"> {{list['id']}}</td>
                 <td id="headerId2">
